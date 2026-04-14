@@ -1,0 +1,42 @@
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "virtualTB"
+version = "0.1.0"
+description = "A Gymnasium-based Virtual Taobao environment for recommendation and RL research."
+readme = "README.md"
+requires-python = ">=3.11,<3.13"
+dependencies = [
+  "gymnasium>=1.1,<2",
+  "numpy>=2.2,<3",
+  "torch>=2.6,<3",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8,<9",
+  "ruff>=0.6,<0.7",
+]
+
+[project.scripts]
+virtualtb-smoke = "virtualTB.smoke:main"
+virtualtb-train-rl = "virtualTB.ReinforcementLearning.main:main"
+virtualtb-train-sl = "virtualTB.SupervisedLearning.main:main"
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.packages.find]
+include = ["virtualTB*"]
+
+[tool.setuptools.package-data]
+virtualTB = ["data/*.pt", "SupervisedLearning/dataset.txt"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
